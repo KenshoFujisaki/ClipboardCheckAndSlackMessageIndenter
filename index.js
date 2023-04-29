@@ -22,12 +22,35 @@ copy.onclick = async () => {
 paste.onclick = async () => {
   try {
     const clipboardItems = await navigator.clipboard.read();
+    console.log(clipboardItems);
+    
+    for (let i = 0; i < clipboardItems.length; i++) {
+      const item = clipboardItems[i];
 
-    const clipboardTypes = clipboardItems.map((e) => e.types).join('<br>');
-    document.getElementById("clipboard-info").innerHTML = clipboardTypes;
+      // データタイプが "text/html" のデータが存在するかをチェック
+      if(item.types.includes('text/html')) {
+        // Blob オブジェクトを取得
+        const blob = await item.getType('text/html');
 
-    for(let i=0; i<clipboardItems.length; i++){
-      let type = clipboardItems[i].types[i];
+        // Blob オブジェクトから HTML テキストを取得
+        const html = await blob.text();
+
+        // HTML テキストを出力
+        console.log(html);
+        
+        document.getElementById("html-field").value = html;
+      }
+      else if() {
+        
+      }
+    }
+
+    const clipboardTypes = clipboardItems.map((e) => e.types)[0];
+    document.getElementById("clipboard-info").innerHTML = clipboardTypes.join('<br>');
+
+    for(let i=0; i<clipboardTypes.length; i++){
+      console.log(i);
+      let type = clipboardTypes[i];
       console.log(type);
       let blob = await clipboardItems[i].getType(type);
       
@@ -36,16 +59,17 @@ paste.onclick = async () => {
         case "text/html":
           blobOutput = await blob.text();
           document.getElementById("html-field").value = blobOutput;
-          break;
+          // break;
         case "text/plain":
           blobOutput = await blob.text();
           document.getElementById("text-field").value = blobOutput;
-          break;
+          // break;
         case "image/png":
+          
           document.getElementById("image-field").src = window.URL.createObjectURL(blobOutput);
-          break;
+          // break;
         default:
-          break;
+          // break;
       }
     }
     log("Clipboard pasted.");
