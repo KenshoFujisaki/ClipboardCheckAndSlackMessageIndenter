@@ -25,6 +25,7 @@ paste.onclick = async () => {
     //initialize
     document.getElementById("html-field").value = "";
     document.getElementById("text-field").value = "";
+    document.getElementById("slack-field").value = "";
     document.getElementById("image-field").src = "https://via.placeholder.com/150/?text=not loaded.";
     
     //get clipboard items
@@ -32,11 +33,18 @@ paste.onclick = async () => {
     
     for (let i = 0; i < clipboardItems.length; i++) {
       const item = clipboardItems[i];
+      console.log(item);
 
       if(item.types.includes('text/html')) {
+        // for html textarea
         const blob = await item.getType('text/html');
         const html = await blob.text();
         document.getElementById("html-field").value = html;
+        
+        // for slack message indenter textarea
+        try {
+          html
+        }
       }
       if(item.types.includes('text/plain')) {
         const blob = await item.getType('text/plain');
