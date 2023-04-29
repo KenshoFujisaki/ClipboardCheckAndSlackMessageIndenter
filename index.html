@@ -1,58 +1,74 @@
-
 <!DOCTYPE html>
 <html>
-<head>
+  <head>
+    <link
+      id="favicon"
+      rel="icon"
+      href="https://cdn.glitch.global/4b086e07-f314-41f8-bf25-53a2b2ac7c13/clipboard-152-195482.png?v=1682786299862"
+      type="image/x-icon"
+    />
     <title>Clipboard Check & Slack Message Indenter</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
-</head>
-<body>
-  <h1>Clipboard Check & Slack Message Indenter</h1>
+    <meta property="og:image" content="https://cdn.glitch.global/4b086e07-f314-41f8-bf25-53a2b2ac7c13/clipboard-152-195482.png?v=1682786299862" />
+    <link rel="stylesheet" type="text/css" href="style.css" />
+  </head>
+  <body>
+    <h1>Clipboard Check & Slack Message Indenter</h1>
 
-  <div>
-    <section>
-      <button id="copy" display="hidden" hidden><strong>Copy Chrome Logo</strong><br><em>(write to clipboard)</em></button>
-      <button id="paste"><strong>Paste Clipboard</strong><br><em>(read from clipboard)</em></button>
-    </section>
-  </div>
+    <div>
+      <section>
+        <button id="copy" display="hidden" hidden>
+          <strong>Copy Chrome Logo</strong><br /><em>(write to clipboard)</em>
+        </button>
+        <button id="paste">
+          <strong>Paste Clipboard</strong><br /><em>(read from clipboard)</em>
+        </button>
+      </section>
+    </div>
 
-  <div>
-    <h3>Permissions:</h3>
-    <section id="permbuttons"></section>
-  </div>
-  
-  <div>
-    <h3>Clipboard Information:</h3>
-    <p id="clipboard-info">not loaded. please click the button "Paste Clipboard".</p>
-  </div>
+    <div>
+      <h3>Permissions:</h3>
+      <section id="permbuttons"></section>
+    </div>
 
-  <div>
-    <h3>Image on clipboard:</h3>
-    <image id="image-field" src="https://via.placeholder.com/150/?text=not loaded."></image>
-  </div>
-    
-  <div>
-    <h3>Text on clipboard:</h3>
-    <textarea id="text-field"></textarea>
-  </div>
-  
-  <div>
-    <h3>HTML on clipboard:</h3>
-    <textarea id="html-field"></textarea>
-  </div>
-  
-  <div>
-    <h3>Slack Message Indenter:</h3>
-    <textarea id="slack-field"></textarea>
-  </div>
+    <div>
+      <h3>Clipboard Information:</h3>
+      <p id="clipboard-info">
+        not loaded. please click the button "Paste Clipboard".
+      </p>
+    </div>
 
-  <div id="toast" hidden></div>
-  
-  <div>
-    <p>
-      Acknowledgments: thanks for <a href="https://web.dev/i18n/ja/async-clipboard/">this article</a>.
-    </p>
-  </div>
+    <div>
+      <h3>Image on clipboard:</h3>
+      <image
+        id="image-field"
+        src="https://via.placeholder.com/150/?text=not loaded."
+      ></image>
+    </div>
 
-  <script src="index.js"></script>
-</body>
+    <div>
+      <h3>Text on clipboard:</h3>
+      <textarea id="text-field"></textarea>
+    </div>
+
+    <div>
+      <h3>HTML on clipboard:</h3>
+      <textarea id="html-field"></textarea>
+    </div>
+
+    <div>
+      <h3>Slack Message Indenter:</h3>
+      <textarea id="slack-field"></textarea>
+    </div>
+
+    <div id="toast" hidden></div>
+
+    <div>
+      <p>
+        Acknowledgments: thanks for
+        <a href="https://web.dev/i18n/ja/async-clipboard/">this article</a>.
+      </p>
+    </div>
+
+    <script src="index.js"></script>
+  </body>
 </html>
