@@ -43,7 +43,17 @@ paste.onclick = async () => {
         
         // for slack message indenter textarea
         try {
-          html
+          const slackMsg = html.match(
+            /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>/g
+          ).map(
+            e => [
+              "　".repeat(e.match(/data-stringify-indent="([0-9]+)"/)[1]),
+              e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
+            ].join("")
+          ).join('\n')
+          document.getElementById("slack-field").value = slackMsg;
+        } catch(e) {
+          console.log(e);
         }
       }
       if(item.types.includes('text/plain')) {
