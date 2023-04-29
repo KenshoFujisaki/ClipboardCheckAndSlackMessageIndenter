@@ -24,23 +24,33 @@ paste.onclick = async () => {
     const clipboardItems = await navigator.clipboard.read();
 
     const clipboardTypes = clipboardItems.map((e) => e.types).join('<br>');
-    console.log(clipboardTypes);
     document.getElementById("clipboard-info").innerHTML = clipboardTypes;
 
     for(let i=0; i<clipboardItems.length; i++){
-      const type = clipboardItems[i].types;
-      const blob = await clipboardItems[0].getType("text/html");
+      let type = clipboardItems[i].types[i];
+      console.log(type);
+      let blob = await clipboardItems[i].getType(type);
+      
+      let blobOutput;
+      switch(type) {
+        case "text/html":
+          blobOutput = await blob.text();
+          document.getElementById("html-field").value = blobOutput;
+          break;
+        case "text/plain":
+          blobOutput = await blob.text();
+          document.getElementById("text-field").value = blobOutput;
+          break;
+        case "image/png":
+          document.getElementById("image-field").src = window.URL.createObjectURL(blobOutput);
+          break;
+        default:
+          break;
+      }
     }
-    console.log(clipboardItems[0]);
-    console.log(clipboardItems[0].getType("text/html"));
-    const blob = await clipboardItems[0].getType("text/html");
-    console.log(blob);
-    console.log(await blob.text());
-    const blobOutput = await clipboardItems[0].getType("image/png");
-    document.getElementById("image-field").src =
-      window.URL.createObjectURL(blobOutput);
-    log("Image pasted.");
+    log("Clipboard pasted.");
   } catch (e) {
+    console.log(e);
     log("Failed to read clipboard");
   }
 };
