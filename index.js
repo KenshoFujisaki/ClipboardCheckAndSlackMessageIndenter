@@ -50,7 +50,16 @@ paste.onclick = async () => {
               "　".repeat(e.match(/data-stringify-indent="([0-9]+)"/)[1]),
               e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
             ].join("")
-          ).join('\n')
+          ).join('\n').replace(
+            /<a target="_blank".*?href="(.*?)".*?>(.*?)<\/a>/g,
+            function(all, group1, group2) {
+              if(group1==group2){
+                return group2;
+              } else {
+                return `${group2}（${group1}）`;
+              }
+            }
+          )
           document.getElementById("slack-field").value = slackMsg;
         } catch(e) {
           console.log(e);

@@ -65,7 +65,7 @@ button:hover, button:focus {
 textarea {
   box-sizing: border-box;
   display: block;
-  max-width: 478px;
+  max-width: 600px;
   margin: 10px auto;
   padding: 10px;
   font: inherit;
@@ -73,7 +73,7 @@ textarea {
   border: 2px solid #432864;
   border-radius: 5px;
   width: calc(100% - 22px);
-  height: 6em;
+  height: 12em;
   outline: none; }
 
 #perms {
