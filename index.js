@@ -71,9 +71,9 @@ function parseSlackHtml(html) {
   try {
     //リスト表現を抽出
     slackMsg = html.match(
-      /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>/g
+      /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>|<div .*?>.*?<\/div>|<pre.*?>(.|\n)*?<\/pre>|<blockquote .*?>.*?<\/blockquote>/g
     ).map(
-      e => [
+      e => (e.slice(0,4)=='<li ') ? [
         (""+e.match(/data-stringify-indent="([0-9]+)"/)[1]).replace(
           /\d+/,
           function(e) {
@@ -84,7 +84,12 @@ function parseSlackHtml(html) {
           }
         ),
         e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
-      ].join("")
+      ].join("") : (
+        (e.slice(0,4)=='<div') ? e.match(/<div .*?>(.*?)<\/div>/)[1] : (
+          (e.slice(0,4)=='<pre') ? e.match(/<pre.*?>((.|\n)*?)<\/pre>/)[1] :
+          '> ' + e.match(/<blockquote.*?>(.*?)<\/blockquote>/)[1]
+        )
+      )
     ).join('\n')
     
     //aタグ（リンク）を置換
@@ -101,13 +106,18 @@ function parseSlackHtml(html) {
     
     //b,spanタグ除去
     slackMsg = slackMsg.replace(
-      /<b.*?>(.*?)<\/b>|<span.*?>(.*?)<\/span>/g,
+      /<b .*?>(.*?)<\/b>|<span.*?>(.*?)<\/span>|<code .*?>(.*?)<\/code>|<s .*?>(.*?)<\/s>|<i .*?>(.*?)<\/i>/g,
       '$1'
     )
     
     //&nbsp;置換
     slackMsg = slackMsg.replace(
       /\&nbsp\;/g, " "
+    )
+    
+    //<br>置換
+    slackMsg = slackMsg.replace(
+      /<br style="box-sizing: inherit;">/g, '\n'
     )
     
   } catch(e) {
