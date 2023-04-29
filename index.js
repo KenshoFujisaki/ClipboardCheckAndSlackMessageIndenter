@@ -69,6 +69,7 @@ paste.onclick = async () => {
 function parseSlackHtml(html) {
   let slackMsg = "";
   try {
+    //リスト表現を抽出
     slackMsg = html.match(
       /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>/g
     ).map(
@@ -84,7 +85,10 @@ function parseSlackHtml(html) {
         ),
         e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
       ].join("")
-    ).join('\n').replace(
+    ).join('\n')
+    
+    //aタグ（リンク）を置換
+    slackMsg = slackMsg.replace(
       /<a target="_blank".*?href="(.*?)".*?>(.*?)<\/a>/g,
       function(all, group1, group2) {
         if(group1==group2){
@@ -94,6 +98,18 @@ function parseSlackHtml(html) {
         }
       }
     )
+    
+    //b,spanタグ除去
+    slackMsg = slackMsg.replace(
+      /<b.*?>(.*?)<\/b>|<span.*?>(.*?)<\/span>/g,
+      '$1'
+    )
+    
+    //&nbsp;置換
+    slackMsg = slackMsg.replace(
+      /\&nbsp\;/g, " "
+    )
+    
   } catch(e) {
     console.log(e);
   }
@@ -109,7 +125,7 @@ navigator.clipboard.addEventListener("clipboardchange", async (e) => {
 /** The 4 available permissions for Async Clipboard API: */
 const PERMISSIONS = [
   { name: "clipboard-read" },
-  { name: "clipboard-write" },
+  // { name: "clipboard-write" },
   //{ name: "clipboard-read",  allowWithoutGesture: false },
   //{ name: "clipboard-read",  allowWithoutGesture: true  },
   //{ name: "clipboard-write", allowWithoutGesture: false },
