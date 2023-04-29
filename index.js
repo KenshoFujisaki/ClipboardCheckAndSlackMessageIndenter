@@ -21,57 +21,37 @@ copy.onclick = async () => {
 /** Read from clipboard when clicking the Paste button */
 paste.onclick = async () => {
   try {
+    
+    //initialize
+    document.getElementById("html-field").value = "";
+    document.getElementById("text-field").value = "";
+    document.getElementById("image-field").src = "https://via.placeholder.com/150/?text=not loaded.";
+    
+    //get clipboard items
     const clipboardItems = await navigator.clipboard.read();
-    console.log(clipboardItems);
     
     for (let i = 0; i < clipboardItems.length; i++) {
       const item = clipboardItems[i];
 
-      // データタイプが "text/html" のデータが存在するかをチェック
       if(item.types.includes('text/html')) {
-        // Blob オブジェクトを取得
         const blob = await item.getType('text/html');
-
-        // Blob オブジェクトから HTML テキストを取得
         const html = await blob.text();
-
-        // HTML テキストを出力
-        console.log(html);
-        
         document.getElementById("html-field").value = html;
       }
-      else if() {
-        
+      if(item.types.includes('text/plain')) {
+        const blob = await item.getType('text/plain');
+        const text = await blob.text();
+        document.getElementById("text-field").value = text;
+      }
+      if(item.types.includes('image/png')) {
+        const blob = await item.getType('image/png');
+        document.getElementById("image-field").src = window.URL.createObjectURL(blob);
       }
     }
 
     const clipboardTypes = clipboardItems.map((e) => e.types)[0];
     document.getElementById("clipboard-info").innerHTML = clipboardTypes.join('<br>');
 
-    for(let i=0; i<clipboardTypes.length; i++){
-      console.log(i);
-      let type = clipboardTypes[i];
-      console.log(type);
-      let blob = await clipboardItems[i].getType(type);
-      
-      let blobOutput;
-      switch(type) {
-        case "text/html":
-          blobOutput = await blob.text();
-          document.getElementById("html-field").value = blobOutput;
-          // break;
-        case "text/plain":
-          blobOutput = await blob.text();
-          document.getElementById("text-field").value = blobOutput;
-          // break;
-        case "image/png":
-          
-          document.getElementById("image-field").src = window.URL.createObjectURL(blobOutput);
-          // break;
-        default:
-          // break;
-      }
-    }
     log("Clipboard pasted.");
   } catch (e) {
     console.log(e);

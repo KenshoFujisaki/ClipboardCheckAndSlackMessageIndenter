@@ -22,6 +22,10 @@ h3 {
   color: #666;
   text-shadow: 0 1px 0 #fff; }
 
+div {
+  margin-top: 20px;
+}
+
 strong {
   font-weight: 500; }
 

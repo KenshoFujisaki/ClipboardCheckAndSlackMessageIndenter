@@ -8,14 +8,17 @@
 <body>
   <h1>Clipboard Checker & Slack Message Indenter</h1>
 
-  <section>
-    <button id="copy" display="hidden" hidden><strong>Copy Chrome Logo</strong><br><em>(write to clipboard)</em></button>
-    <button id="paste"><strong>Paste Clipboard</strong><br><em>(read from clipboard)</em></button>
-  </section>
+  <div>
+    <section>
+      <button id="copy" display="hidden" hidden><strong>Copy Chrome Logo</strong><br><em>(write to clipboard)</em></button>
+      <button id="paste"><strong>Paste Clipboard</strong><br><em>(read from clipboard)</em></button>
+    </section>
+  </div>
 
-  <h3>Permissions:</h3>
-
-  <section id="permbuttons"></section>
+  <div>
+    <h3>Permissions:</h3>
+    <section id="permbuttons"></section>
+  </div>
   
   <div>
     <h3>Clipboard Information:</h3>
@@ -29,12 +32,12 @@
     
   <div>
     <h3>Text on clipboard:</h3>
-    <textarea id="text-field" rows="10" cols="50"></textarea>
+    <textarea id="text-field" rows="10" cols="80"></textarea>
   </div>
   
   <div>
     <h3>HTML on clipboard:</h3>
-    <textarea id="html-field" rows="10" cols="50"></textarea>
+    <textarea id="html-field" rows="10" cols="80"></textarea>
   </div>
 
   <div id="toast" hidden></div>
