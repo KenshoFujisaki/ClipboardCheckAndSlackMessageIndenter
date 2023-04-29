@@ -77,12 +77,11 @@ function parseSlackHtml(html) {
           /\d+/,
           function(e) {
             switch(e) {
-              case 0: return "";
-              case 1: return "・";
-              default: return "　　　";//return "　".repeat(e*1-1)+"- ";
+              case '0': return "・"; break;
+              default: return "　".repeat(e*1)+"- ";
             }
           }
-        ).replace,
+        ),
         e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
       ].join("")
     ).join('\n').replace(
