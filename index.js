@@ -42,28 +42,8 @@ paste.onclick = async () => {
         document.getElementById("html-field").value = html;
         
         // for slack message indenter textarea
-        try {
-          const slackMsg = html.match(
-            /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>/g
-          ).map(
-            e => [
-              "　".repeat(e.match(/data-stringify-indent="([0-9]+)"/)[1]),
-              e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
-            ].join("")
-          ).join('\n').replace(
-            /<a target="_blank".*?href="(.*?)".*?>(.*?)<\/a>/g,
-            function(all, group1, group2) {
-              if(group1==group2){
-                return group2;
-              } else {
-                return `${group2}（${group1}）`;
-              }
-            }
-          )
-          document.getElementById("slack-field").value = slackMsg;
-        } catch(e) {
-          console.log(e);
-        }
+        const slackMsg = parseSlackHtml(html);
+        document.getElementById("slack-field").value = slackMsg;
       }
       if(item.types.includes('text/plain')) {
         const blob = await item.getType('text/plain');
@@ -85,6 +65,41 @@ paste.onclick = async () => {
     log("Failed to read clipboard");
   }
 };
+
+function parseSlackHtml(html) {
+  let slackMsg = "";
+  try {
+    slackMsg = html.match(
+      /<li data-stringify-indent="[0-9]+".*?">.*?<\/li>/g
+    ).map(
+      e => [
+        (""+e.match(/data-stringify-indent="([0-9]+)"/)[1]).replace(
+          /\d+/,
+          function(e) {
+            switch(e) {
+              case 0: return "";
+              case 1: return "・";
+              default: return "　　　";//return "　".repeat(e*1-1)+"- ";
+            }
+          }
+        ).replace,
+        e.match(/<li data-stringify-indent="[0-9]+".*?">(.*?)<\/li>/)[1]
+      ].join("")
+    ).join('\n').replace(
+      /<a target="_blank".*?href="(.*?)".*?>(.*?)<\/a>/g,
+      function(all, group1, group2) {
+        if(group1==group2){
+          return group2;
+        } else {
+          return `${group2}（${group1}）`;
+        }
+      }
+    )
+  } catch(e) {
+    console.log(e);
+  }
+  return slackMsg;
+}
 
 /** Watch for pastes */
 navigator.clipboard.addEventListener("clipboardchange", async (e) => {
