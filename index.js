@@ -24,7 +24,9 @@ paste.onclick = async () => {
     console.log(clipboardItems);
     console.log(clipboardItems[0]);
     console.log(clipboardItems[0].getType('text/html'));
-    console.log(await clipboardItems[0].getType('text/html'));
+    const blob = await clipboardItems[0].getType('text/html');
+    console.log(blob);
+    console.log(await blob.text());
   	const blobOutput = await clipboardItems[0].getType('image/png');
     document.getElementById('image-field').src =
       window.URL.createObjectURL(blobOutput);
