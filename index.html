@@ -9,26 +9,27 @@
   <h1>Clipboard Checker & Slack Message Indenter</h1>
 
   <section>
-    <button id="copy" display="hidden"><strong>Copy Chrome Logo</strong><br><em>(write to clipboard)</em></button>
-    <button id="paste"><strong>Paste Image on Clipboard</strong><br><em>(read from clipboard)</em></button>
+    <button id="copy" display="hidden" hidden><strong>Copy Chrome Logo</strong><br><em>(write to clipboard)</em></button>
+    <button id="paste"><strong>Paste Clipboard</strong><br><em>(read from clipboard)</em></button>
   </section>
 
   <h3>Permissions:</h3>
 
   <section id="permbuttons"></section>
 
+  <s
   <h3>Image on clipboard:</h3>
-  <image id="image-field" width="42" height="42"></image>
+  <image id="image-field" src="https://via.placeholder.com/150/?text=not loaded."></image>
+  
+  <h3>Text on clipboard:</h3>
+  <textarea type="textarea" rows="10" cols="50"></textarea>
+  
+  <h3>HTML on clipboard:</h3>
+  <textarea type="textarea" rows="10" cols="50"></textarea>
 
-<!--   <h3>Example 'image/png' images to copy:</h3>
-  <div>
-    <image src="https://upload.wikimedia.org/wikipedia/commons/5/53/Google_Chrome_Material_Icon-450x450.png" width="42" height="42"></image>
-    <image src="https://upload.wikimedia.org/wikipedia/commons/f/f3/Chromium_Material_Icon.png" width="42" height="42"></image>  
-  </div>
- -->
   <div id="toast" hidden></div>
   <p>
-    <a href="https://web.dev/i18n/ja/async-clipboard/"></a>
+    Acknowledgments: thanks for <a href="https://web.dev/i18n/ja/async-clipboard/">this article</a>.
   </p>
   <script src="index.js"></script>
 </body>
